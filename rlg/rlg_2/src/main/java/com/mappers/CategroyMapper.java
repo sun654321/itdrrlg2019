@@ -1,6 +1,5 @@
 package com.mappers;
 
-import com.common.ResponseCode;
 import com.pojo.Categroy;
 import org.apache.ibatis.annotations.Param;
 

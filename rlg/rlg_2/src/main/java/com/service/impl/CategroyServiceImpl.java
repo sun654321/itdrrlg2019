@@ -86,12 +86,15 @@ public class CategroyServiceImpl implements CategroyService {
     //获取产品分类
     @Override
     public ResponseCode topcategory(Integer sid) {
-        if (sid == null || sid.equals("")) {
-            sid = 0;
+        if (sid == null || sid<0) {
+           return ResponseCode.notseccessRs("参数错误");
         }
-        List<Categroy> list = categroyMapper.topcategory(sid);
+        List list = categroyMapper.topcategory(sid);
         if (list == null) {
-            return ResponseCode.notseccessRs("没有该商品");
+            return ResponseCode.notseccessRs("没有该ID");
+        }
+        if(list.size()==0){
+            return ResponseCode.notseccessRs("没有子分类");
         }
         return ResponseCode.seccessRs(list);
     }

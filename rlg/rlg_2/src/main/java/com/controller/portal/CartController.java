@@ -5,10 +5,12 @@ import com.common.Const;
 import com.common.ResponseCode;
 import com.pojo.Cart;
 import com.pojo.User;
+import com.pojo.vo.CartVO;
 import com.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -22,7 +24,7 @@ public class CartController {
 
     //购物车List列表
     @RequestMapping("list.do")
-    public ResponseCode<Cart> listdo(HttpSession session) {
+    public ResponseCode<CartVO> listdo(HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENTUSER);
         if (user == null) {
             return ResponseCode.notseccessRs(10, "用户未登录,请登录");
@@ -33,7 +35,9 @@ public class CartController {
 
     //购物车添加商品
     @RequestMapping("add.do")
-    public ResponseCode<Cart> add(Integer productId, Integer count, HttpSession session) {
+    public ResponseCode<CartVO> add(Integer productId,
+                                  @RequestParam(value = "count", required = false, defaultValue = "1") Integer count,
+                                  HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENTUSER);
         if (user == null) {
             return ResponseCode.notseccessRs(10, "用户未登录,请登录");
@@ -44,7 +48,7 @@ public class CartController {
 
     //更新购物车某个产品数量
     @RequestMapping("update.do")
-    public ResponseCode<Cart> update(Integer productId, Integer count, HttpSession session) {
+    public ResponseCode<CartVO> update(Integer productId, Integer count, HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENTUSER);
         if (user == null) {
             return ResponseCode.notseccessRs(10, "用户未登录,请登录");
@@ -52,9 +56,10 @@ public class CartController {
         ResponseCode rs = cartService.update(user.getId(), productId, count);
         return rs;
     }
+
     //移除购物车某个产品
     @RequestMapping("delete_product.do")
-    public ResponseCode<Cart> deleteProduct( String productIds, HttpSession session) {
+    public ResponseCode<CartVO> deleteProduct(String productIds, HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENTUSER);
         if (user == null) {
             return ResponseCode.notseccessRs(10, "用户未登录,请登录");
@@ -65,29 +70,29 @@ public class CartController {
 
     //购物车选中某个商品
     @RequestMapping("select.do")
-    public ResponseCode<Cart> selectProduct( Integer productId, HttpSession session,Integer check) {
+    public ResponseCode<CartVO> selectProduct(Integer productId, HttpSession session, Integer check) {
         User user = (User) session.getAttribute(Const.CURRENTUSER);
         if (user == null) {
             return ResponseCode.notseccessRs(10, "用户未登录,请登录");
         }
-        ResponseCode rs = cartService.selectProduct(user.getId(), productId,check);
+        ResponseCode rs = cartService.selectProduct(user.getId(), productId, check);
         return rs;
     }
 
-//购物车取消选中某个商品
+    //购物车取消选中某个商品
     @RequestMapping("un_select.do")
-    public ResponseCode<Cart> unselect( Integer productId, HttpSession session,Integer check) {
+    public ResponseCode<CartVO> unselect(Integer productId, HttpSession session, Integer check) {
         User user = (User) session.getAttribute(Const.CURRENTUSER);
         if (user == null) {
             return ResponseCode.notseccessRs(10, "用户未登录,请登录");
         }
-        ResponseCode rs = cartService.unselectProduct(user.getId(), productId,check);
+        ResponseCode rs = cartService.unselectProduct(user.getId(), productId, check);
         return rs;
     }
 
     //查询在购物车里的产品数量
     @RequestMapping("get_cart_product_count.do")
-    public ResponseCode<Cart> getcartproductcount( HttpSession session) {
+    public ResponseCode<Integer> getcartproductcount(HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENTUSER);
         if (user == null) {
             return ResponseCode.notseccessRs(10, "用户未登录,请登录");
@@ -98,13 +103,23 @@ public class CartController {
 
     //购物车全选
     @RequestMapping("select_all.do")
-    public ResponseCode<Cart> select_all( HttpSession session) {
+    public ResponseCode<CartVO> selectall(HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENTUSER);
         if (user == null) {
             return ResponseCode.notseccessRs(10, "用户未登录,请登录");
         }
-        ResponseCode rs = cartService.select_all(user.getId());
+        ResponseCode rs = cartService.selectall(user.getId());
         return rs;
     }
 
+    //购物车全取消
+    @RequestMapping("un_select_all.do")
+    public ResponseCode<CartVO> unSelectAll(HttpSession session) {
+        User user = (User) session.getAttribute(Const.CURRENTUSER);
+        if (user == null) {
+            return ResponseCode.notseccessRs(10, "用户未登录,请登录");
+        }
+        ResponseCode rs = cartService.unSelectAll(user.getId());
+        return rs;
+    }
 }

@@ -11,6 +11,6 @@ public interface ProductService {
                       Integer pageSize,String orderBy);
 
     //产品detail
-    ResponseCode detail(Integer productId);
+    ResponseCode detail(Integer productId, Integer is_new, Integer is_hot, Integer is_banner);
 
 }

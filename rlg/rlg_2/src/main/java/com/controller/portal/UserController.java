@@ -24,7 +24,7 @@ public class UserController {
 
     //用户登录
     @RequestMapping("login.do")
-    public ResponseCode<User> login(String username, String password, HttpSession session) {
+    public ResponseCode<User> login (String username, String password, HttpSession session) {
         ResponseCode<User> rs = userService.login(username, password);
         //根据状态码判断是否成功
         if (rs.isSuccess()) {
@@ -71,11 +71,14 @@ public class UserController {
     }
 
     //退出登录
+
+
     @RequestMapping("logout.do")
     public ResponseCode<User> logout(HttpSession session) {
         session.removeAttribute(Const.CURRENTUSER);
         return ResponseCode.seccessRs(0,"退出成功");
     }
+
 
     //获取当前登录用户的详细信息
     @RequestMapping("get_inforamtion.do")

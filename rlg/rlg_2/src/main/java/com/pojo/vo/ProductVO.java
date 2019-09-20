@@ -1,11 +1,12 @@
-package com.pojo;
-
-import lombok.Data;
+package com.pojo.vo;
 
 import java.math.BigDecimal;
 import java.util.Date;
-@Data
-public class Product {
+
+public class ProductVO {
+
+   private String imageHost;
+
     private Integer id;
 
     private Integer categoryId;
@@ -144,7 +145,7 @@ public class Product {
     }
 
     public void setSubImages(String subImages) {
-        this.subImages = subImages ;
+        this.subImages = subImages;
     }
 
     public String getDetail() {
@@ -152,6 +153,14 @@ public class Product {
     }
 
     public void setDetail(String detail) {
-        this.detail = detail;
+        this.detail = detail ;
+    }
+
+    public String getImageHost() {
+        return imageHost;
+    }
+
+    public void setImageHost(String imageHost) {
+        this.imageHost = imageHost;
     }
 }

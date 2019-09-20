@@ -131,10 +131,12 @@ public class UserServiceImpl implements UserService {
         if (forgetToken == null || forgetToken.equals("")) {
             return ResponseCode.notseccessRs("令牌参数为空");
         }
+
         User login = userMapper.login(username);
         if (login == null) {
             return ResponseCode.notseccessRs(101, "用户名不存在");
         }
+
         //判断令牌
         String s = TokenCache.get("token_" + username);
 
@@ -156,10 +158,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseCode resetpassword(String passwordOld, String passwordNew, Integer id) {
         if (passwordOld == null || passwordOld.equals("")) {
-            return ResponseCode.notseccessRs(100,"旧密码为空");
+            return ResponseCode.notseccessRs(1,"旧密码为空");
         }
         if (passwordNew == null || passwordNew.equals("")) {
-            return ResponseCode.notseccessRs(100,"新密码为空");
+            return ResponseCode.notseccessRs(1,"新密码为空");
         }
        //验证旧密码
         String md5Code = MD5Utils.getMD5Code(passwordOld);
@@ -181,15 +183,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseCode forgetgetquestion(String username) {
         if (username == null || username.equals("")) {
-            return ResponseCode.notseccessRs(100,"用户名不能为空");
+            return ResponseCode.notseccessRs(1,"用户名不能为空");
         }
         User login = userMapper.login(username);
         if (login == null) {
-            return ResponseCode.notseccessRs(101, "用户名不存在");
+            return ResponseCode.notseccessRs(1, "用户名不存在");
         } else {
             String s = userMapper.forgetquestion(username);
             if (s == null || s.equals("")) {
-                return ResponseCode.notseccessRs(1, "该用户未设置找回密码问题");
+                return ResponseCode.notseccessRs(100, "该用户未设置找回密码问题");
             }
             return ResponseCode.seccessRs(s);
         }
@@ -199,13 +201,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseCode forgetcheckanswer(String username, String question, String answer) {
         if (username == null || username.equals("")) {
-            return ResponseCode.notseccessRs("用户名不能为空");
+            return ResponseCode.notseccessRs(1,"用户名不能为空");
         }
         if (question == null || question.equals("")) {
-            return ResponseCode.notseccessRs(100, "问题不能为空");
+            return ResponseCode.notseccessRs(1, "问题不能为空");
         }
         if (answer == null || answer.equals("")) {
-            return ResponseCode.notseccessRs(100, "答案不能为空");
+            return ResponseCode.notseccessRs(1, "答案不能为空");
         }
         User login = userMapper.login(username);
         if (login == null) {
@@ -213,9 +215,10 @@ public class UserServiceImpl implements UserService {
         }
         User user = userMapper.forgetcheckanswer(username, question, answer);
         if (user == null) {
-            return ResponseCode.notseccessRs(1, "问题答案错误");
+            return ResponseCode.notseccessRs(100, "问题答案错误");
         }
         //产生随机字符令牌
+        //UUID是通用的标识符
         String token = UUID.randomUUID().toString();
         TokenCache.set("token_" + username, token);
         return ResponseCode.seccessRs(token);

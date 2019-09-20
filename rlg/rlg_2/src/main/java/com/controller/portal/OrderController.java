@@ -9,10 +9,9 @@ import com.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.servlet.http.HttpSession;
-
 
 @Controller
 @ResponseBody
@@ -23,7 +22,9 @@ public class OrderController {
     private OrderService orderService;
     //订单列表
     @RequestMapping("list.do")
-    public ResponseCode listdo(HttpSession session,String pageSize, String pageNum ) {
+    public ResponseCode listdo(HttpSession session,
+                               @RequestParam(value = "pageNum",required = false,defaultValue = "1")Integer  pageSize,
+                               @RequestParam(value = "pageNum",required = false,defaultValue = "10")Integer  pageNum ) {
         User user = (User) session.getAttribute(Const.CURRENTUSER);
         if(user==null){
             return ResponseCode.notseccessRs("用户未登录");
@@ -34,7 +35,7 @@ public class OrderController {
 
     //获取订单的商品信息
     @RequestMapping("get_order_cart_product.do")
-    public ResponseCode<OrderItemMapper> getordercartproduct(HttpSession session) {
+    public ResponseCode getordercartproduct(HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENTUSER);
         if(user==null){
             return ResponseCode.notseccessRs("用户未登录");
@@ -46,7 +47,7 @@ public class OrderController {
 
 //创建订单
     @RequestMapping("create.do")
-    public ResponseCode<OrderItem> create(HttpSession session,Integer shippingId) {
+    public ResponseCode create(HttpSession session,Integer shippingId) {
         User user = (User) session.getAttribute(Const.CURRENTUSER);
         if(user==null){
             return ResponseCode.notseccessRs("用户未登录");
@@ -54,5 +55,19 @@ public class OrderController {
         ResponseCode rs = orderService.create(shippingId);
         return rs;
     }
+
+    //用户支付
+    @RequestMapping("pay.do")
+    public ResponseCode pay(HttpSession session,Long orderNo ) {
+        User user = (User) session.getAttribute(Const.CURRENTUSER);
+        if(user==null){
+            return ResponseCode.notseccessRs("用户未登录");
+        }
+        ResponseCode rs = orderService.pay(orderNo);
+        return rs;
+    }
+
+
+
 
 }

@@ -7,6 +7,7 @@ import com.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 
@@ -18,17 +19,12 @@ public class OrderServiceImpl implements OrderService {
 
     //订单列表
     @Override
-    public ResponseCode<OrderItem> selectAll(Integer uid, String pageSize, String pageNum) {
-        if (pageSize == null || pageSize.equals("")) {
-            pageSize = "10";
-        }
-        if (pageNum == null || pageNum.equals("")) {
-            pageNum = "0";
-        }
-        Integer pageSize1 = Integer.parseInt(pageSize);
-        Integer pageNum1 = Integer.parseInt(pageNum);
+    public ResponseCode<OrderItem> selectAll(Integer uid, Integer pageSize, Integer pageNum) {
 
-        List<OrderItem> li = orderItemMapper.selectAll(uid,pageSize1, pageNum1);
+        List<OrderItem> li = orderItemMapper.selectAll(uid,pageSize, pageNum);
+        if(li==null){
+            return ResponseCode.notseccessRs(5,"未查询到订单信息");
+        }
         return ResponseCode.seccessRs(0, li);
     }
 
@@ -51,5 +47,10 @@ public class OrderServiceImpl implements OrderService {
         return null;
     }
 
+    //用户支付
+    @Override
+    public ResponseCode pay(Long orderNo) {
+        return null;
+    }
 }
 

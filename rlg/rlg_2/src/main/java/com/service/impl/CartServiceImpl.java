@@ -25,9 +25,9 @@ import java.util.List;
 @Service
 public class CartServiceImpl implements CartService {
     @Autowired
-    private CartMapper cartMapper;
+    CartMapper cartMapper;
     @Autowired
-    private ProductMapper productMapper;
+    ProductMapper productMapper;
 
     //购物车List列表
     @Override
@@ -96,11 +96,10 @@ public class CartServiceImpl implements CartService {
                 //使用工具类进行数据封装
                 CartProductVO cartProductVO = PoToVoUtil.cartCartProductVO(product, cart);
                 //购物车更新有效信息
-                Cart cartForQuantity=new Cart();
+                Cart cartForQuantity = new Cart();
                 cartForQuantity.setId(cart.getId());
                 cartForQuantity.setQuantity(cartProductVO.getQuantity());
                 cartMapper.updatecartQuantity(cartForQuantity);
-
 
                 //计算购物车总价
                 if (cart.getChecked() == Const.cart.CHECK) {
@@ -110,6 +109,7 @@ public class CartServiceImpl implements CartService {
                 cartProductVOList.add(cartProductVO);
             }
         }
+
         //封装CartVO
         cartVO.setCartProductVOList(cartProductVOList);
         cartVO.setIsallchecked(this.checkAll(uid));
@@ -186,10 +186,10 @@ public class CartServiceImpl implements CartService {
         if (check == null || check.equals("")) {
             check = 1;
         }
-       //验证是否存在该商品
+        //验证是否存在该商品
         Cart cart1 = cartMapper.selectProductIdUid(uid, productId);
-        if (cart1==null){
-            return ResponseCode.notseccessRs(3,"商品不存在");
+        if (cart1 == null) {
+            return ResponseCode.notseccessRs(3, "商品不存在");
         }
         //修改状态
         int cart = cartMapper.selectProduct(uid, productId, check);
@@ -211,8 +211,8 @@ public class CartServiceImpl implements CartService {
         }
         //验证是否存在该商品
         Cart cart1 = cartMapper.selectProductIdUid(uid, productId);
-        if (cart1==null){
-            return ResponseCode.notseccessRs(3,"商品不存在");
+        if (cart1 == null) {
+            return ResponseCode.notseccessRs(3, "商品不存在");
         }
         //修改状态
         int cart = cartMapper.unselectProduct(uid, productId, check);
@@ -237,8 +237,8 @@ public class CartServiceImpl implements CartService {
     public ResponseCode<CartVO> selectall(Integer uid) {
         List<Cart> list = cartMapper.listdo(uid);
 
-        if(list==null){
-            return  ResponseCode.notseccessRs(3,"商品不存在");
+        if (list == null) {
+            return ResponseCode.notseccessRs(3, "商品不存在");
         }
         cartMapper.updateByUidCheck(uid, Const.cart.CHECK);
 
@@ -251,10 +251,10 @@ public class CartServiceImpl implements CartService {
     public ResponseCode<CartVO> unSelectAll(Integer uid) {
         List<Cart> list = cartMapper.listdo(uid);
 
-        if(list==null){
-            return  ResponseCode.notseccessRs(3,"商品不存在");
+        if (list == null) {
+            return ResponseCode.notseccessRs(3, "商品不存在");
         }
-       cartMapper.updateByUidCheck(uid, Const.cart.UNCHECK);
+        cartMapper.updateByUidCheck(uid, Const.cart.UNCHECK);
         CartVO cartVO = cartList(uid);
         return ResponseCode.seccessRs(cartVO);
 

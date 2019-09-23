@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    UserService userService;
 
     //用户登录
     @RequestMapping("login.do")
@@ -64,7 +64,7 @@ public class UserController {
     public ResponseCode<User> getuserinfo(HttpSession session) {
         User user1 = (User) session.getAttribute(Const.CURRENTUSER);
         if (user1 == null) {
-            return ResponseCode.notseccessRs(2, "用户未登录");
+            return ResponseCode.notseccessRs(Const.UsersEnum.NO_LOGIN.getCode(), Const.UsersEnum.NO_LOGIN.getDesc());
         }
         user1.setPassword("");
         return ResponseCode.seccessRs(user1);
@@ -76,7 +76,7 @@ public class UserController {
     @RequestMapping("logout.do")
     public ResponseCode<User> logout(HttpSession session) {
         session.removeAttribute(Const.CURRENTUSER);
-        return ResponseCode.seccessRs(0,"退出成功");
+        return ResponseCode.seccessRs(Const.UsersEnum.LOGOUT.getCode(),Const.UsersEnum.LOGOUT.getDesc());
     }
 
 
@@ -88,7 +88,7 @@ public class UserController {
             ResponseCode rs = userService.getinforamtion(user1.getId(),user1.getUsername());
         return rs;
         }
-        return ResponseCode.notseccessRs("用户未登录，无法获取当前用户信息");
+        return ResponseCode.notseccessRs(Const.UsersEnum.FORCE_EXIT.getCode(), Const.UsersEnum.FORCE_EXIT.getDesc());
     }
 
     //登录状态更新个人信息
@@ -102,7 +102,7 @@ public class UserController {
             session.setAttribute(Const.CURRENTUSER,u);
             return rs;
         }
-        return ResponseCode.notseccessRs("用户未登录，无法获取当前用户信息");
+        return ResponseCode.notseccessRs(Const.UsersEnum.NO_LOGIN.getCode(), Const.UsersEnum.NO_LOGIN.getDesc());
     }
 
      //忘记密码
@@ -138,7 +138,7 @@ public class UserController {
             session.setAttribute(Const.CURRENTUSER,user1);
             return rs;
         }
-        return ResponseCode.notseccessRs("用户未登录，无法获取当前用户信息");
+        return ResponseCode.notseccessRs(Const.UsersEnum.NO_LOGIN.getCode(), Const.UsersEnum.NO_LOGIN.getDesc());
     }
 
 

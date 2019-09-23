@@ -12,13 +12,113 @@ public class OrderListAndItemVO {
     private Integer endRow;
     private Integer total;
     private Integer pages;
-    private List<OrderListVO> list;
-    private List<OrderItemListVo> orderItemVoList;
+    private List<OrderVO> list;
+    private List<OrderItemVo> orderItemVoList;
     private String imageHost;
-    private Integer shippingId;
     private String receiverName;
     private String shippingVo;
 
+    public Integer getPageNum() {
+        return pageNum;
+    }
 
+    public void setPageNum(Integer pageNum) {
+        this.pageNum = pageNum;
+    }
 
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public String getOrderBy() {
+        return orderBy;
+    }
+
+    public void setOrderBy(String orderBy) {
+        this.orderBy = orderBy;
+    }
+
+    public Integer getStartRow() {
+        return startRow;
+    }
+
+    public void setStartRow(Integer startRow) {
+        this.startRow = startRow;
+    }
+
+    public Integer getEndRow() {
+        return endRow;
+    }
+
+    public void setEndRow(Integer endRow) {
+        this.endRow = endRow;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
+
+    public Integer getPages() {
+        return pages;
+    }
+
+    public void setPages(Integer pages) {
+        this.pages = pages;
+    }
+
+    public List<OrderVO> getList() {
+        return list;
+    }
+
+    public void setList(List<OrderVO> list) {
+        this.list = list;
+    }
+
+    public List<OrderItemVo> getOrderItemVoList() {
+        return orderItemVoList;
+    }
+
+    public void setOrderItemVoList(List<OrderItemVo> orderItemVoList) {
+        this.orderItemVoList = orderItemVoList;
+    }
+
+    public String getImageHost() {
+        return imageHost;
+    }
+
+    public void setImageHost(String imageHost) {
+        this.imageHost = imageHost;
+    }
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
+
+    public String getShippingVo() {
+        return shippingVo;
+    }
+
+    public void setShippingVo(String shippingVo) {
+        this.shippingVo = shippingVo;
+    }
 }

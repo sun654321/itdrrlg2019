@@ -17,10 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ProductController {
 
     @Autowired
-    private ProductService productService;
+     ProductService productService;
     @Autowired
-private CategroyService categroyService;
-    //有问题
+     CategroyService categroyService;
     //产品搜索及动态排序List
     @RequestMapping("list.do")
     public ResponseCode list(Integer categoryId,String keyword,

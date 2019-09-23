@@ -2,8 +2,6 @@ package com.controller.portal;
 
 import com.common.Const;
 import com.common.ResponseCode;
-import com.mappers.OrderItemMapper;
-import com.pojo.OrderItem;
 import com.pojo.User;
 import com.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,20 @@ import javax.servlet.http.HttpSession;
 public class OrderController {
 
    @Autowired
-    private OrderService orderService;
+     OrderService orderService;
+
+
+    //创建订单
+    @RequestMapping("create.do")
+    public ResponseCode create(HttpSession session,Integer shippingId) {
+        User user = (User) session.getAttribute(Const.CURRENTUSER);
+        if(user==null){
+            return ResponseCode.notseccessRs(Const.UsersEnum.NO_LOGIN.getCode(), Const.UsersEnum.NO_LOGIN.getDesc());
+        }
+        ResponseCode rs = orderService.create(shippingId,user.getId());
+        return rs;
+    }
+
     //订单列表
     @RequestMapping("list.do")
     public ResponseCode listdo(HttpSession session,
@@ -27,7 +38,7 @@ public class OrderController {
                                @RequestParam(value = "pageNum",required = false,defaultValue = "10")Integer  pageNum ) {
         User user = (User) session.getAttribute(Const.CURRENTUSER);
         if(user==null){
-            return ResponseCode.notseccessRs("用户未登录");
+            return ResponseCode.notseccessRs(Const.UsersEnum.NO_LOGIN.getCode(), Const.UsersEnum.NO_LOGIN.getDesc());
         }
         ResponseCode rs = orderService.selectAll(user.getId(),pageSize, pageNum);
         return rs;
@@ -38,33 +49,11 @@ public class OrderController {
     public ResponseCode getordercartproduct(HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENTUSER);
         if(user==null){
-            return ResponseCode.notseccessRs("用户未登录");
+            return ResponseCode.notseccessRs(Const.UsersEnum.NO_LOGIN.getCode(), Const.UsersEnum.NO_LOGIN.getDesc());
         }
         ResponseCode rs = orderService.getordercartproduct(user.getId());
         return rs;
 
-    }
-
-//创建订单
-    @RequestMapping("create.do")
-    public ResponseCode create(HttpSession session,Integer shippingId) {
-        User user = (User) session.getAttribute(Const.CURRENTUSER);
-        if(user==null){
-            return ResponseCode.notseccessRs("用户未登录");
-        }
-        ResponseCode rs = orderService.create(shippingId);
-        return rs;
-    }
-
-    //用户支付
-    @RequestMapping("pay.do")
-    public ResponseCode pay(HttpSession session,Long orderNo ) {
-        User user = (User) session.getAttribute(Const.CURRENTUSER);
-        if(user==null){
-            return ResponseCode.notseccessRs("用户未登录");
-        }
-        ResponseCode rs = orderService.pay(orderNo);
-        return rs;
     }
 
 

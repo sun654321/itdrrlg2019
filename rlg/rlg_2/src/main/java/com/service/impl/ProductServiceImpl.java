@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
-    private ProductMapper productMapper;
+     ProductMapper productMapper;
 
     //产品搜索及动态排序List
     @Override

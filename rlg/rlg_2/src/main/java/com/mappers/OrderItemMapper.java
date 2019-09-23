@@ -1,5 +1,6 @@
 package com.mappers;
 
+import com.pojo.Order;
 import com.pojo.OrderItem;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,6 +23,7 @@ public interface OrderItemMapper {
     List<OrderItem> selectAll(@Param("uid")Integer uid,@Param("pageSize1") Integer pageSize1, @Param("pageNum1")Integer pageNum1);
 
     //获取订单的商品信息
-    List<OrderItemMapper> getordercartproduct(Integer uid);
-
+    List<OrderItem> getordercartproduct(Integer uid);
+    //根据订单号查询对应商品详情
+    List<OrderItem> selectByOrderNo(Long orderNo);
 }

@@ -3,8 +3,9 @@ package com.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import java.io.Serializable;
+
+
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class ResponseCode<T> implements  Serializable {
     private Integer status;

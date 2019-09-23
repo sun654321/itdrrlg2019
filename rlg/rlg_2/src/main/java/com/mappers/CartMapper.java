@@ -39,4 +39,6 @@ public interface CartMapper {
     int updateByUidCheck(@Param("uid")Integer uid, @Param("check")Integer check);
     //购物车更新有效信息
     int updatecartQuantity(Cart cartForQuantity);
+  //查询选择的商品
+    List<Cart> selectCheck(Integer uid);
 }

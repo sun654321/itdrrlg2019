@@ -27,5 +27,6 @@ public interface ProductMapper {
 
     //根据商品id进行查询
     Product selectByproductId(Integer productId);
-
+    //查询商品的信息
+    List<Product> selectProductId(Integer productId);
 }

@@ -13,7 +13,9 @@ import java.util.List;
 @Service
 public class CategroyServiceImpl implements CategroyService {
     @Autowired
-    private CategroyMapper categroyMapper;
+     CategroyMapper categroyMapper;
+
+
     //获取品类子节点
     @Override
     public ResponseCode selectone(Integer categroyId) {

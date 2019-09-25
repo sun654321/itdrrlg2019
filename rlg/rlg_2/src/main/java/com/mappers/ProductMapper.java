@@ -28,5 +28,7 @@ public interface ProductMapper {
     //根据商品id进行查询
     Product selectByproductId(Integer productId);
     //查询商品的信息
-    List<Product> selectProductId(Integer productId);
+    Product selectProductId(Integer productId);
+    //根据id进行修改信息
+    int updateId(@Param("productId")Integer productId, @Param("Stock")Integer Stock);
 }

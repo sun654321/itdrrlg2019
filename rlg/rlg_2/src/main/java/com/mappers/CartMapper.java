@@ -41,4 +41,7 @@ public interface CartMapper {
     int updatecartQuantity(Cart cartForQuantity);
   //查询选择的商品
     List<Cart> selectCheck(Integer uid);
+//清空购物车
+    int delectuid(@Param("list") List<Cart> list,@Param("uid") Integer uid);
+
 }

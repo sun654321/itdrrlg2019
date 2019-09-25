@@ -26,19 +26,26 @@ public class OrderVO {
 
     private Date createTime;
 
-    private List<OrderItemVo> orderItemVoList;
+    private List<OrderItemVO> orderItemVoList;
 
-
+    private String imageHost;
     private Integer shippingId;
 
-    private String shippingVo;
+    private ShippingVO2 shippingVO2;
 
+    public String getImageHost() {
+        return imageHost;
+    }
 
-    public List<OrderItemVo> getOrderItemVoList() {
+    public void setImageHost(String imageHost) {
+        this.imageHost = imageHost;
+    }
+
+    public List<OrderItemVO> getOrderItemVoList() {
         return orderItemVoList;
     }
 
-    public void setOrderItemVoList(List<OrderItemVo> orderItemVoList) {
+    public void setOrderItemVoList(List<OrderItemVO> orderItemVoList) {
         this.orderItemVoList = orderItemVoList;
     }
 
@@ -131,11 +138,11 @@ public class OrderVO {
         this.shippingId = shippingId;
     }
 
-    public String getShippingVo() {
-        return shippingVo;
+    public ShippingVO2 getShippingVO2() {
+        return shippingVO2;
     }
 
-    public void setShippingVo(String shippingVo) {
-        this.shippingVo = shippingVo;
+    public void setShippingVO2(ShippingVO2 shippingVO2) {
+        this.shippingVO2 = shippingVO2;
     }
 }

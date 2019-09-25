@@ -3,7 +3,7 @@ package com.pojo.vo;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class OrderItemVo {
+public class OrderItemVO {
 
 
     private Long orderNo;

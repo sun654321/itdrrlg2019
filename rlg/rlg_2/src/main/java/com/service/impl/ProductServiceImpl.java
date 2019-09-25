@@ -34,6 +34,7 @@ public class ProductServiceImpl implements ProductService {
 
         PageHelper.startPage(pageNum,pageSize,split[0] + " " + split[1]);
         List<Product> list = productMapper.list(categoryId, key, split[0], split[1]);
+
         PageInfo pf=new PageInfo(list);
 
         return ResponseCode.seccessRs(pf);

@@ -3,13 +3,14 @@ package com.service;
 import com.common.ResponseCode;
 
 public interface OrderService {
+    //创建订单
+    ResponseCode create( Integer shippingId,Integer uid);
+
+   //获取订单的商品信息
+    ResponseCode getordercartproduct(Integer uid, Long orderNo);
 
     //订单列表
-    ResponseCode selectAll(Integer id, Integer pageSize, Integer pageNum);
-   //获取订单的商品信息
-    ResponseCode getordercartproduct(Integer id);
-   //创建订单
-    ResponseCode create(Integer id, Integer shippingId);
-
-
+    ResponseCode selectAll(Integer uid, Integer pageSize, Integer pageNum);
+    //取消订单
+    ResponseCode cancelOne(Integer uid, Long orderNo);
 }

@@ -5,7 +5,6 @@ import com.alipay.api.domain.GoodsDetail;
 import com.common.Const;
 import com.pojo.*;
 import com.pojo.pay.BizContent;
-import com.pojo.pay.Configs;
 import com.pojo.pay.PGoodsDetail;
 import com.pojo.vo.*;
 
@@ -71,7 +70,6 @@ public class PoToVoUtil {
         //判断商品的库存
         Integer count = 0;
         if (c.getQuantity() <= product.getStock()) {
-
             count = c.getQuantity();
             cartProductVO.setLimitQuantity(Const.cart.LLIMITQUANTITYSUCCESS);
         } else {
@@ -161,11 +159,39 @@ public class PoToVoUtil {
         return biz;
     }
 
+
+    //封装OrderItemVo
+    public static OrderItemVO orderItemVOTo(OrderItem orderItem){
+        OrderItemVO orderItemVo = new OrderItemVO();
+        orderItemVo.setOrderNo(orderItem.getOrderNo());
+        orderItemVo.setProductId(orderItem.getProductId());
+        orderItemVo.setProductName(orderItem.getProductName());
+        orderItemVo.setProductImage(orderItem.getProductImage());
+        orderItemVo.setCurrentUnitPrice(orderItem.getCurrentUnitPrice());
+        orderItemVo.setQuantity(orderItem.getQuantity());
+        orderItemVo.setTotalPrice(orderItem.getTotalPrice());
+        orderItemVo.setCreateTime(orderItem.getCreateTime());
+        return orderItemVo;
+    }
+
+    //封装ShippingVO2
+    public static ShippingVO2 slshippingVO2(Shipping shipping){
+        ShippingVO2 shippingVO2=new ShippingVO2();
+        shippingVO2.setReceiverName(shipping.getReceiverName());
+        shippingVO2.setReceiverPhone(shipping.getReceiverPhone());
+        shippingVO2.setReceiverMobile(shipping.getReceiverMobile());
+        shippingVO2.setReceiverProvince(shipping.getReceiverProvince());
+        shippingVO2.setReceiverCity(shipping.getReceiverCity());
+        shippingVO2.setReceiverDistrict(shipping.getReceiverDistrict());
+        shippingVO2.setReceiverAddress(shipping.getReceiverAddress());
+        shippingVO2.setReceiverZip(shipping.getReceiverZip());
+        return shippingVO2;
+    }
+
     //创建订单封装
-    public static OrderVO orderOrderVO(Order order, OrderItem orderItem) {
+    public static OrderVO orderOrderVO(Order order, ShippingVO2 shippingVO2, List<OrderItemVO> orderItemVos) {
         //封装OrderVO
         OrderVO orderVO = new OrderVO();
-
         orderVO.setOrderNo(order.getOrderNo());
         orderVO.setPayment(order.getPayment());
         orderVO.setPaymentType(order.getPaymentType());
@@ -176,27 +202,12 @@ public class PoToVoUtil {
         orderVO.setEndTime(order.getEndTime());
         orderVO.setCloseTime(order.getCloseTime());
         orderVO.setCreateTime(order.getCreateTime());
-
-        //封装OrderItemVo
-        OrderItemVo orderItemVo = new OrderItemVo();
-        orderItemVo.setOrderNo(orderItem.getOrderNo());
-        orderItemVo.setProductId(orderItem.getProductId());
-        orderItemVo.setProductName(orderItem.getProductName());
-        orderItemVo.setProductImage(orderItem.getProductImage());
-        orderItemVo.setCurrentUnitPrice(orderItem.getCurrentUnitPrice());
-        orderItemVo.setQuantity(orderItem.getQuantity());
-        orderItemVo.setTotalPrice(orderItem.getTotalPrice());
-        orderItemVo.setCreateTime(orderItem.getCreateTime());
-
-
-        orderVO.setOrderItemVoList(orderVO.getOrderItemVoList());
-
+        orderVO.setOrderItemVoList(orderItemVos);
+        orderVO.setImageHost(PropertiesUtils.readByKey("imageHost"));
         orderVO.setShippingId(order.getShippingId());
         //有问题
-        orderVO.setShippingVo("  ");
-
+        orderVO.setShippingVO2(shippingVO2);
         return orderVO;
-
     }
 
 

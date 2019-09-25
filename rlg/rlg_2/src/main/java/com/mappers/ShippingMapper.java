@@ -27,7 +27,7 @@ public interface ShippingMapper {
     //根据uid查询该用户的收货地址
     List<Shipping> selectAddress(Integer uid);
    //估计收货的id进行查询
-    int selectByproductId(Integer shippingId);
+    Shipping selectByproductId(Integer shippingId);
     //查询某一个详细的收货地址信息
     Shipping selectOne(@Param("sid") Integer sid,@Param("uid") Integer uid);
 }
